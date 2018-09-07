@@ -17,7 +17,7 @@ set (effect_SRCS
 )
 
 kconfig_add_kcfg_files (effect_SRCS
-    config.kcfgc
+    MinimizeScaleConfig.kcfgc
 )
 
 add_library (kwin4_effect_minimizescale SHARED ${effect_SRCS})

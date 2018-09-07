@@ -19,11 +19,11 @@
 #include "MinimizeScaleEffect.h"
 
 // KConfigSkeleton
-#include "minimizescaleconfig.h"
+#include "MinimizeScaleConfig.h"
 
 MinimizeScaleEffect::MinimizeScaleEffect()
 {
-    initConfig<Appear1Config>();
+    initConfig<MinimizeScaleConfig>();
     reconfigure(ReconfigureAll);
 
     connect(KWin::effects, &KWin::EffectsHandler::windowMinimized,
@@ -45,7 +45,7 @@ void MinimizeScaleEffect::reconfigure(ReconfigureFlags flags)
     MinimizeScaleConfig::self()->read();
 
     m_duration = std::chrono::milliseconds(
-        animationTime<MinimizeScaleEffect>(160));
+        animationTime<MinimizeScaleConfig>(160));
 }
 
 void MinimizeScaleEffect::prePaintScreen(KWin::ScreenPrePaintData& data, int time)

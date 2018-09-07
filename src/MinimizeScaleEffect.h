@@ -50,9 +50,9 @@ public:
     static bool supported();
 
 private slots:
-    void slotWindowMinimized(EffectWindow* w);
-    void slotWindowUnminimized(EffectWindow* w);
-    void slotWindowDeleted(EffectWindow* w);
+    void slotWindowMinimized(KWin::EffectWindow* w);
+    void slotWindowUnminimized(KWin::EffectWindow* w);
+    void slotWindowDeleted(KWin::EffectWindow* w);
 
 private:
     std::chrono::milliseconds m_duration;
@@ -67,7 +67,7 @@ private:
         TimeLine timeLine;
     };
 
-    QHash<const EffectWindow*, Animation> m_animations;
+    QHash<const KWin::EffectWindow*, Animation> m_animations;
 };
 
 inline int MinimizeScaleEffect::requestedEffectChainPosition() const

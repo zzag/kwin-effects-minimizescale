@@ -20,6 +20,9 @@
 // Qt
 #include <QEasingCurve>
 
+// std
+#include <chrono>
+
 class TimeLine {
 public:
     enum Direction {
@@ -28,7 +31,8 @@ public:
     };
 
 public:
-    explicit TimeLine(int duration = 1000, Direction direction = Forward)
+    explicit TimeLine(std::chrono::milliseconds duration = std::chrono::milliseconds(1000),
+        Direction direction = Forward)
         : m_duration(duration)
         , m_direction(direction)
     {
@@ -36,49 +40,60 @@ public:
 
     qreal progress() const
     {
-        Q_ASSERT(m_duration > 0);
-        auto t = static_cast<qreal>(m_elapsed) / m_duration;
-        return m_direction == Backward ? 1 - t : t;
+        return static_cast<qreal>(m_elapsed.count()) / m_duration.count();
     }
 
     qreal value() const
     {
-        return m_easingCurve.valueForProgress(progress());
+        const qreal t = progress();
+        return m_easingCurve.valueForProgress(
+            m_direction == Backward ? 1.0 - t : t);
     }
 
-    void update(int delta)
+    void update(std::chrono::milliseconds delta)
     {
-        Q_ASSERT(delta >= 0);
-        if (m_finished) {
+        Q_ASSERT(delta >= std::chrono::milliseconds::zero());
+        if (m_done) {
             return;
         }
         m_elapsed += delta;
         if (m_elapsed >= m_duration) {
-            m_finished = true;
+            m_done = true;
             m_elapsed = m_duration;
         }
     }
 
-    int elapsed() const
+    std::chrono::milliseconds elapsed() const
     {
         return m_elapsed;
     }
 
-    void setElapsed(int elapsed)
+    void setElapsed(std::chrono::milliseconds elapsed)
     {
+        Q_ASSERT(elapsed >= std::chrono::milliseconds::zero());
+        if (elapsed == m_elapsed) {
+            return;
+        }
         reset();
         update(elapsed);
     }
 
-    int duration() const
+    std::chrono::milliseconds duration() const
     {
         return m_duration;
     }
 
-    void setDuration(int duration)
+    void setDuration(std::chrono::milliseconds duration)
     {
-        Q_ASSERT(duration > 0);
+        Q_ASSERT(duration > std::chrono::milliseconds::zero());
+        if (duration == m_duration) {
+            return;
+        }
+        m_elapsed = std::chrono::milliseconds(qRound(progress() * m_duration.count()));
         m_duration = duration;
+        if (m_elapsed == m_duration) {
+            m_done = true;
+        }
     }
 
     Direction direction() const
@@ -91,7 +106,7 @@ public:
         if (m_direction == direction) {
             return;
         }
-        if (m_elapsed > 0) {
+        if (m_elapsed > std::chrono::milliseconds::zero()) {
             m_elapsed = m_duration - m_elapsed;
         }
         m_direction = direction;
@@ -119,20 +134,20 @@ public:
 
     bool done() const
     {
-        return m_finished;
+        return m_done;
     }
 
     void reset()
     {
-        m_elapsed = 0;
-        m_finished = false;
+        m_elapsed = std::chrono::milliseconds::zero();
+        m_done = false;
     }
 
 private:
-    int m_duration;
+    std::chrono::milliseconds m_duration;
     Direction m_direction;
     QEasingCurve m_easingCurve;
 
-    int m_elapsed = 0;
-    bool m_finished = false;
+    std::chrono::milliseconds m_elapsed;
+    bool m_done = false;
 };

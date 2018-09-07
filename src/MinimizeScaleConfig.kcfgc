@@ -1,4 +1,4 @@
-File=minimizescale.kcfg
+File=config.kcfg
 ClassName=MinimizeScaleConfig
 Singleton=true
 Mutators=true

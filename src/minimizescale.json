@@ -18,6 +18,6 @@
         ]
     },
     "org.kde.kwin.effect": {
-        "exclusiveGroup": ""
+        "exclusiveGroup": "minimize"
     }
 }

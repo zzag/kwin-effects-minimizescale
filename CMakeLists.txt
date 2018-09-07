@@ -17,8 +17,8 @@ set (CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/cmake/Modules
 )
 
-include(KDEInstallDirs)
-include(KDECMakeSettings)
+include (KDEInstallDirs)
+include (KDECMakeSettings)
 
 add_subdirectory (src)
 

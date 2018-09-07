@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project (kwin-effects-appear1)
+project (kwin-effects-minimizescale)
 
 include (FeatureSummary)
 

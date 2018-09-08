@@ -82,6 +82,22 @@ void MinimizeScaleEffect::paintWindow(KWin::EffectWindow* w, int mask, QRegion r
     }
 
     const qreal t = (*animationIt).timeLine.value();
+    const QRectF iconRect = w->iconGeometry();
+    const QRectF windowRect = w->geometry();
+
+    QRectF targetRect = windowRect;
+    const qreal targetScale = (iconRect.width() > iconRect.height())
+        ? iconRect.height() / windowRect.height()
+        : iconRect.width() / windowRect.width();
+    targetRect.setWidth(targetRect.width() * targetScale);
+    targetRect.setHeight(targetRect.height() * targetScale);
+    targetRect.moveCenter(iconRect.center());
+
+    const qreal scaleT = interpolate((*animationIt).fromScale, (*animationIt).toScale, t);
+    data.setXScale(data.xScale() * interpolate(targetRect.width() / windowRect.width(), 1.0, scaleT));
+    data.setYScale(data.yScale() * interpolate(targetRect.height() / windowRect.height(), 1.0, scaleT));
+    data.setXTranslation(data.xTranslation() + interpolate(targetRect.x() - windowRect.x(), 0.0, scaleT));
+    data.setYTranslation(data.yTranslation() + interpolate(targetRect.y() - windowRect.y(), 0.0, scaleT));
 
     data.multiplyOpacity(interpolate((*animationIt).fromOpacity, (*animationIt).toOpacity, t));
 
@@ -99,7 +115,9 @@ void MinimizeScaleEffect::postPaintScreen()
         }
     }
 
+    // TODO: Don't do full repaints.
     KWin::effects->addRepaintFull();
+
     KWin::effects->postPaintScreen();
 }
 
@@ -123,12 +141,19 @@ void MinimizeScaleEffect::slotWindowMinimized(KWin::EffectWindow* w)
         return;
     }
 
+    if (!w->geometry().isValid()) {
+        return;
+    }
+
     Animation& animation = m_animations[w];
     animation.kind = AnimationKind::Minimize;
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
+
+    animation.fromScale = 1.0;
+    animation.toScale = 0.6;
 
     animation.fromOpacity = 1.0;
     animation.toOpacity = 0.0;
@@ -146,12 +171,19 @@ void MinimizeScaleEffect::slotWindowUnminimized(KWin::EffectWindow* w)
         return;
     }
 
+    if (!w->geometry().isValid()) {
+        return;
+    }
+
     Animation& animation = m_animations[w];
     animation.kind = AnimationKind::Unminimize;
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
+
+    animation.fromScale = 0.6;
+    animation.toScale = 1.0;
 
     animation.fromOpacity = 0.0;
     animation.toOpacity = 1.0;

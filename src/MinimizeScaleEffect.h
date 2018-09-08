@@ -65,6 +65,8 @@ private:
     struct Animation {
         AnimationKind kind;
         TimeLine timeLine;
+        qreal fromScale;
+        qreal toScale;
         qreal fromOpacity;
         qreal toOpacity;
     };

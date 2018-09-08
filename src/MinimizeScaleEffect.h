@@ -65,6 +65,8 @@ private:
     struct Animation {
         AnimationKind kind;
         TimeLine timeLine;
+        qreal fromOpacity;
+        qreal toOpacity;
     };
 
     QHash<const KWin::EffectWindow*, Animation> m_animations;

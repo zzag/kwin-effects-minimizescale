@@ -81,6 +81,10 @@ void MinimizeScaleEffect::paintWindow(KWin::EffectWindow* w, int mask, QRegion r
         return;
     }
 
+    const qreal t = (*animationIt).timeLine.value();
+
+    data.multiplyOpacity(interpolate((*animationIt).fromOpacity, (*animationIt).toOpacity, t));
+
     KWin::effects->paintWindow(w, mask, region, data);
 }
 
@@ -126,6 +130,9 @@ void MinimizeScaleEffect::slotWindowMinimized(KWin::EffectWindow* w)
     animation.timeLine.setDuration(m_duration);
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
 
+    animation.fromOpacity = 1.0;
+    animation.toOpacity = 0.0;
+
     w->addRepaintFull();
 }
 
@@ -145,6 +152,9 @@ void MinimizeScaleEffect::slotWindowUnminimized(KWin::EffectWindow* w)
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
+
+    animation.fromOpacity = 0.0;
+    animation.toOpacity = 1.0;
 
     w->addRepaintFull();
 }

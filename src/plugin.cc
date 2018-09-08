@@ -19,7 +19,7 @@
 
 KWIN_EFFECT_FACTORY_ENABLED(MinimizeScaleEffectFactory,
                             MinimizeScaleEffect,
-                            "minimizescale.json",
+                            "metadata.json",
                             return false;)
 
 #include "plugin.moc"

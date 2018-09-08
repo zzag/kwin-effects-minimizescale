@@ -89,8 +89,8 @@ void MinimizeScaleEffect::paintWindow(KWin::EffectWindow* w, int mask, QRegion r
     const QRectF windowRect = w->geometry();
 
     const qreal targetScale = (iconRect.width() > iconRect.height())
-        ? iconRect.height() / windowRect.height()
-        : iconRect.width() / windowRect.width();
+        ? iconRect.width() / windowRect.width()
+        : iconRect.height() / windowRect.height();
     QRectF targetRect = windowRect;
     targetRect.setWidth(targetRect.width() * targetScale);
     targetRect.setHeight(targetRect.height() * targetScale);

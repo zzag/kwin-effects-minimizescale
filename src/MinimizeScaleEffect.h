@@ -69,13 +69,7 @@ private:
     qreal m_unminimizeOpacity;
     qreal m_unminimizeScale;
 
-    enum class AnimationKind {
-        Minimize,
-        Unminimize
-    };
-
     struct Animation {
-        AnimationKind kind;
         TimeLine timeLine;
         qreal fromScale;
         qreal toScale;

@@ -149,7 +149,6 @@ void MinimizeScaleEffect::slotWindowMinimized(KWin::EffectWindow* w)
     }
 
     Animation& animation = m_animations[w];
-    animation.kind = AnimationKind::Minimize;
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);
@@ -179,7 +178,6 @@ void MinimizeScaleEffect::slotWindowUnminimized(KWin::EffectWindow* w)
     }
 
     Animation& animation = m_animations[w];
-    animation.kind = AnimationKind::Unminimize;
     animation.timeLine.reset();
     animation.timeLine.setDirection(TimeLine::Forward);
     animation.timeLine.setDuration(m_duration);

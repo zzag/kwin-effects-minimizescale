@@ -44,7 +44,7 @@ void MinimizeScaleEffect::reconfigure(ReconfigureFlags flags)
     MinimizeScaleConfig::self()->read();
 
     m_duration = std::chrono::milliseconds(
-        animationTime<MinimizeScaleConfig>(160));
+        animationTime<MinimizeScaleConfig>(200));
     m_minimizeOpacity = MinimizeScaleConfig::minimizeOpacity();
     m_minimizeScale = MinimizeScaleConfig::minimizeScale();
     m_unminimizeOpacity = MinimizeScaleConfig::unminimizeOpacity();

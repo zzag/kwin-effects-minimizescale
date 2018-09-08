@@ -14,7 +14,7 @@
             <max>1.0</max>
         </entry>
         <entry name="MinimizeScale" type="Double">
-            <default>0.6</default>
+            <default>0.4</default>
             <min>0.0</min>
             <max>1.0</max>
         </entry>
@@ -24,7 +24,7 @@
             <max>1.0</max>
         </entry>
         <entry name="UnminimizeScale" type="Double">
-            <default>0.6</default>
+            <default>0.4</default>
             <min>0.0</min>
             <max>1.0</max>
         </entry>

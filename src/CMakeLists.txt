@@ -8,7 +8,6 @@ find_package (KF5 REQUIRED COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
-    Service
     WindowSystem
 )
 

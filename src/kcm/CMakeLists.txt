@@ -21,7 +21,6 @@ target_link_libraries (kwin_minimizescale_config
     KF5::ConfigCore
     KF5::ConfigGui
     KF5::ConfigWidgets
-    KF5::Service
 )
 
 install (

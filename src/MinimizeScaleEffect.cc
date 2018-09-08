@@ -23,7 +23,6 @@
 
 MinimizeScaleEffect::MinimizeScaleEffect()
 {
-    initConfig<MinimizeScaleConfig>();
     reconfigure(ReconfigureAll);
 
     connect(KWin::effects, &KWin::EffectsHandler::windowMinimized,

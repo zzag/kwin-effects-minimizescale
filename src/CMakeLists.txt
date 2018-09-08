@@ -1,15 +1,20 @@
 find_package (Qt5 REQUIRED COMPONENTS
     Core
+    DBus
     Gui
 )
 
 find_package (KF5 REQUIRED COMPONENTS
     Config
+    ConfigWidgets
     CoreAddons
+    Service
     WindowSystem
 )
 
 find_package (KWinEffects REQUIRED)
+
+add_subdirectory (kcm)
 
 set (effect_SRCS
     plugin.cc

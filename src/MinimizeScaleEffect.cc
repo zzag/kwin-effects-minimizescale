@@ -18,7 +18,7 @@
 // own
 #include "MinimizeScaleEffect.h"
 
-// KConfigSkeleton
+// Auto-generated
 #include "MinimizeScaleConfig.h"
 
 MinimizeScaleEffect::MinimizeScaleEffect()

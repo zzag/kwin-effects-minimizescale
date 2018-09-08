@@ -29,6 +29,10 @@
 class MinimizeScaleEffect : public KWin::Effect {
     Q_OBJECT
     Q_PROPERTY(int duration READ duration)
+    Q_PROPERTY(qreal minimizeOpacity READ minimizeOpacity)
+    Q_PROPERTY(qreal minimizeScale READ minimizeScale)
+    Q_PROPERTY(qreal unminimizeOpacity READ unminimizeOpacity)
+    Q_PROPERTY(qreal unminimizeScale READ unminimizeScale)
 
 public:
     MinimizeScaleEffect();
@@ -45,6 +49,10 @@ public:
     int requestedEffectChainPosition() const override;
 
     int duration() const;
+    qreal minimizeOpacity() const;
+    qreal minimizeScale() const;
+    qreal unminimizeOpacity() const;
+    qreal unminimizeScale() const;
 
 public:
     static bool supported();
@@ -56,6 +64,10 @@ private slots:
 
 private:
     std::chrono::milliseconds m_duration;
+    qreal m_minimizeOpacity;
+    qreal m_minimizeScale;
+    qreal m_unminimizeOpacity;
+    qreal m_unminimizeScale;
 
     enum class AnimationKind {
         Minimize,
@@ -82,4 +94,24 @@ inline int MinimizeScaleEffect::requestedEffectChainPosition() const
 inline int MinimizeScaleEffect::duration() const
 {
     return m_duration.count();
+}
+
+inline qreal MinimizeScaleEffect::minimizeOpacity() const
+{
+    return m_minimizeOpacity;
+}
+
+inline qreal MinimizeScaleEffect::minimizeScale() const
+{
+    return m_minimizeScale;
+}
+
+inline qreal MinimizeScaleEffect::unminimizeOpacity() const
+{
+    return m_unminimizeOpacity;
+}
+
+inline qreal MinimizeScaleEffect::unminimizeScale() const
+{
+    return m_unminimizeScale;
 }

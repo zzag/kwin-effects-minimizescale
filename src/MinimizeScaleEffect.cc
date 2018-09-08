@@ -46,6 +46,10 @@ void MinimizeScaleEffect::reconfigure(ReconfigureFlags flags)
 
     m_duration = std::chrono::milliseconds(
         animationTime<MinimizeScaleConfig>(160));
+    m_minimizeOpacity = MinimizeScaleConfig::minimizeOpacity();
+    m_minimizeScale = MinimizeScaleConfig::minimizeScale();
+    m_unminimizeOpacity = MinimizeScaleConfig::unminimizeOpacity();
+    m_unminimizeScale = MinimizeScaleConfig::unminimizeScale();
 }
 
 void MinimizeScaleEffect::prePaintScreen(KWin::ScreenPrePaintData& data, int time)
@@ -153,10 +157,10 @@ void MinimizeScaleEffect::slotWindowMinimized(KWin::EffectWindow* w)
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
 
     animation.fromScale = 1.0;
-    animation.toScale = 0.6;
+    animation.toScale = m_minimizeScale;
 
     animation.fromOpacity = 1.0;
-    animation.toOpacity = 0.0;
+    animation.toOpacity = m_minimizeOpacity;
 
     w->addRepaintFull();
 }
@@ -182,10 +186,10 @@ void MinimizeScaleEffect::slotWindowUnminimized(KWin::EffectWindow* w)
     animation.timeLine.setDuration(m_duration);
     animation.timeLine.setEasingCurve(QEasingCurve::InOutSine);
 
-    animation.fromScale = 0.6;
+    animation.fromScale = m_unminimizeScale;
     animation.toScale = 1.0;
 
-    animation.fromOpacity = 0.0;
+    animation.fromOpacity = m_unminimizeOpacity;
     animation.toOpacity = 1.0;
 
     w->addRepaintFull();

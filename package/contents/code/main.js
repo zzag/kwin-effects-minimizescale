@@ -71,6 +71,11 @@ var minimizeScaleEffect = {
             return;
         }
 
+        if (window.unminimizeAnimation) {
+            cancel(window.unminimizeAnimation);
+            delete window.unminimizeAnimation;
+        }
+
         var targetRect = morphRect(windowRect, iconRect, 1.0 - minimizeScaleEffect.minimizeScale);
 
         window.minimizeAnimation = animate({
@@ -118,6 +123,11 @@ var minimizeScaleEffect = {
         var windowRect = window.geometry;
         if (windowRect.width == 0 || windowRect.height == 0) {
             return;
+        }
+
+        if (window.minimizeAnimation) {
+            cancel(window.minimizeAnimation);
+            delete window.minimizeAnimation;
         }
 
         var targetRect = morphRect(windowRect, iconRect, 1.0 - minimizeScaleEffect.unminimizeScale);

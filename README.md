@@ -5,6 +5,6 @@ KWin effect that animates the minimizing of windows with the scale animation.
 
 ## Installation
 
-```sh
+```
 kpackagetool5 --type KWin/Effect --install package
 ```

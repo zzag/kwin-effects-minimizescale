@@ -172,6 +172,8 @@ var minimizeScaleEffect = {
         effect.configChanged.connect(minimizeScaleEffect.loadConfig);
         effects.windowMinimized.connect(minimizeScaleEffect.slotWindowMinimized);
         effects.windowUnminimized.connect(minimizeScaleEffect.slotWindowUnminimized);
+        
+        minimizeScaleEffect.loadConfig();
     }
 };
 
